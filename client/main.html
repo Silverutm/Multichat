@@ -1,0 +1,404 @@
+<body>
+</body>
+
+<template name="ApplicationLayout">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{#if estoy}}
+    <div class="container">
+        
+        {{>header}}
+        {{>loginButtons}}
+        <!-- iron router will select what to render in place of yield-->
+
+
+    {{> nuevo}}
+        
+    </div>
+    {{/if}}
+
+{{>yield "duda"}}
+{{#if estoy}}
+<div class="content container-fluid bootstrap snippets">
+      <div class="row row-broken">
+        <div class="col-sm-3 col-xs-12">
+          <div class="col-inside-lg decor-default chat" style="overflow: hidden; outline: none;" tabindex="5000">
+            <div class="chat-users member_list">
+              <h6></h6>
+                {{> yield "chatroomList"}}
+                    
+
+            </div>
+          </div>
+        </div>
+
+        <div id="scroller" class="col-sm-6 col-xs-12 chat" style="overflow: hidden; outline: none;" tabindex="5001">
+          <div class="col-inside-lg decor-default">
+            <div class="chat-body">
+              <h6>Chat Asesor</h6>
+
+              {{> yield "messageList"}}
+            
+            
+                
+                
+            
+        
+              
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3 col-xs-12">
+          <div class="col-inside-lg decor-default chat" style="overflow: hidden; outline: none;" tabindex="5000">
+            <div class="chat-users member_list">
+              <h6></h6>
+                {{> yield "chatrodomList"}}
+                informacion
+                <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
+                            </span>Licenciaturas</a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-pencil text-primary"></span><a href="#" class="js-crear-problema">A</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-comment text-success"></span><a href="#" class="js-crear-concurso">B</a>
+                                        <span class="badge"></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-user">
+                            </span>Becas</a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <a href="/admin/editar/problema">D</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/admin/editar/concurso">Concurso</a> <span class="label label-info"></span>
+                                    </td>
+                                </tr>                              
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-trash text-danger"></span><a href="/admin/editar/usuarios" class="text-danger">
+                                            E</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+
+            
+                    
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    $(function(){
+    $(".chat").niceScroll();
+})
+    </script>
+{{/if}}
+</template>
+
+<template name="header">
+    <a href="/"><img src="/q.png"></a>
+    
+</template>
+
+<template name="chatroomList">
+    {{#if currentUser}}
+    
+
+    <h3>Chats Activos</h3>
+    {{#each chatrooms}}
+        {{>chatroomItem}}
+    {{/each}}
+
+
+    {{/if}}
+
+
+
+
+</template>
+
+<template name="chatrodomList">
+  {{#if currentUser}}
+    
+
+    <h3>Chats Inactivos</h3>
+    {{#each chatrooms}}
+        {{>chatroomItem}}
+    {{/each}}
+
+
+    {{/if}}
+</template>
+
+<!-- HERE is where you come in... you must edit this template -->
+<template name="chatroomForm">
+    <!-- put in a call to the quickForm template here 
+        CLUE: you need to pass it the following attributes:
+	collection - the name of the collection variable that stores the messages (look in collections.js)
+        id (can be anything)
+        type -  should be method
+        meteormethod - the name of the method that inserts the message (look in methods.js)
+      -->
+    
+
+</template>
+
+<template name="chatroomItem">
+    
+
+
+                    <div class="user me"><a href="/chats/{{_id}}">
+                        <div class="avatar">
+                        <img src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="User name">
+                        <div class="status off"></div>
+                        </div>
+                        <div class="name">{{nombre}}</div>
+                        <div class="name">{{email}}</div>
+                        <div class="mood">{{description _id}}</div>
+                        </a>
+                    </div>
+</template>
+
+<template name="messageList">
+    <h3>--: {{title}}</h3>
+    
+
+    {{#each messages _id}}
+        {{>messageItem}}
+    {{/each}}
+    <div class="answer-add">
+                
+                
+                
+                {{>messageForm}}
+    </div>
+    
+    
+    
+</template>
+
+<template name="messageItem">
+  
+
+      <div class="answer {{derecha nickname}}">
+      
+                <div class="avatar">
+                  <img src="http://bootdey.com/img/Content/avatar/avatar4.png" alt="User name">
+                  <div class="status offline"></div>
+                </div>
+                <div class="name">{{nickname}}</div>
+                <div class="js-del-message">X</div>
+                <div class="text">
+                  {{messageText}}
+                </div>
+                <div class="time">{{convertir createdOn}}</div>
+              </div>
+</template>
+
+<template name="messageForm">
+    {{#autoForm collection="Messages"
+                id="insertMessageForm"
+                type="method"
+                meteormethod="insertMessage"}}
+  <fieldset>
+    {{> afQuickField name='messageText'}}
+    <!-- the rest of the fields are hidden -->
+    {{> afQuickField name='chatroomId' value=_id type="hidden"}}
+    <!-- this one will be set by the method to the current user id -->
+    {{> afQuickField name='nickname' value=0 type="hidden"}}
+    {{> afQuickField name='createdOn' type="hidden"}}
+    {{> afQuickField name='privado'}}
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Enviar</button>
+  <button type="button" class="btn btn-success js-finalizar">Finalizar</button>
+  <button type="button" class="btn btn-success js-transferir">Trasnferir</button>
+{{/autoForm}}
+</template>
+
+
+<template name="nuevo">
+    
+</template>
+
+
+
+
+<template name="info">
+    {{#if ya}}
+    <div class="container">
+  <img src="/q.png">
+  <p>Bienvenido a nuestro chat UTEL</p><p> llena los campos y en breve te atenderá un especialista</p>
+  <form class="js-duda">
+    <div class="form-group">
+      <label for="usr">Nombre</label>
+      <input type="text" class="form-control" id="usr" name="nombre">
+    </div>
+    <div class="form-group">
+      <input class="js-checar" type="checkbox" name="alumno" id="alumno" value="." > Soy alumnno
+    </div>
+    {{#if soy_alumno}}
+    <div class="form-group">
+      <label for="usr">Matricula</label>
+      <input type="tel" class="form-control" id="mail" name="email" required>
+      <div class="form-group">
+  <label for="sel1">Selecciona una opcion:</label>
+  <select class="form-control" id="sel1" name="tema">
+    <option value="lic">A1</option>
+    <option value="master">A2</option>
+    <option value="lic">A3</option>
+    <option value="master">A4</option>
+  </select>
+</div>
+    </div>
+    {{else}}
+    <div class="form-group">
+      <label for="usr">Email</label>
+      <input type="email" class="form-control" id="mail" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="usr">Teléfono</label>
+      <input type="tel" class="form-control" id="tel" name="tel">
+      <div class="form-group">
+  <label for="sel1">Selecciona una opcion:</label>
+  <select class="form-control" id="sel1" name="tema">
+    <option value="lic">Licenciatura</option>
+    <option value="master">Maestria</option>
+    <option value="lic">Doctorado</option>
+    <option value="master">Master Utel</option>
+  </select>
+</div>
+    </div>
+    {{/if}}
+    
+<button type="submit" class="btn btn-success">Chatear</button>
+  </form>
+</div>
+{{else}}
+
+
+<div class="content container-fluid bootstrap snippets">
+      <div class="row row-broken">
+        
+<div class="col-sm-3 col-xs-12">
+          <div class="col-inside-lg decor-default " style="overflow: hidden; outline: none;" tabindex="5000">
+            <div class="chat-users member_list">
+              
+                
+                    
+
+            </div>
+          </div>
+        </div>
+        <div id="scroller" class="col-sm-12 col-xs-12 chat" style="overflow: hidden; outline: none;" tabindex="5001">
+          <div class="col-inside-lg decor-default">
+            <div class="chat-body">
+              <h6>Dimos Dudas </h6>
+
+              {{> copiamessageList}}
+            
+            
+                
+                
+            
+        
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    $(function(){
+    $(".chat").niceScroll();
+})
+    </script>
+
+
+{{/if}}
+</template>
+
+
+<template name="copiamessageList">
+    <h3>Chatroom: {{title}}</h3>
+    
+
+    {{#each messages }}
+        {{>messageItem}}
+    {{/each}}
+    <div class="answer-add">
+                
+                
+                
+                {{>copiamessageForm}}
+
+    </div>
+    
+    
+    
+</template>
+
+
+<template name="copiamessageForm">
+    {{#autoForm collection="Messages"
+                id="insertMessageForm"
+                type="method"
+                meteormethod="insertMessage"}}
+    <div class="row">
+    <div class="col-xs-9">
+        
+    
+  <fieldset>
+    {{> afQuickField name='messageText'}}
+    <!-- the rest of the fields are hidden -->
+    {{> afQuickField name='chatroomId' value=id type="hidden"}}
+    <!-- this one will be set by the method to the current user id -->
+    {{> afQuickField name='nickname' value=nombre type="hidden"}}
+    {{> afQuickField name='createdOn' type="hidden"}}
+    {{> afQuickField name='privado' type="hidden"}}
+  </fieldset>
+  </div>
+   <div class="col-xs-3">
+  <button type="submit" class="btn btn-primary">Enviar</button>
+</div></div>
+{{/autoForm}}
+</template>
